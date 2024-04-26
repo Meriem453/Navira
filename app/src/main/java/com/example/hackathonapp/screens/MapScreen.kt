@@ -1,11 +1,24 @@
 package com.example.hackathonapp.screens
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +38,9 @@ import com.example.hackathonapp.R
 import com.example.hackathonapp.items.InteractivePortMap
 import com.example.hackathonapp.model.Quay
 import com.example.hackathonapp.model.Ship
+import com.example.hackathonapp.items.Quay
+import com.example.hackathonapp.model.Quay
+import com.example.hackathonapp.model.Ship
 
 @Composable
 fun MapScreen() {
@@ -32,8 +48,6 @@ fun MapScreen() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-
-
 
 
         Image(
