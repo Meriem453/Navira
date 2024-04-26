@@ -66,6 +66,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.firebase:firebase-firestore:24.11.1")
+    implementation("com.google.firebase:firebase-messaging:23.4.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -92,6 +93,8 @@ dependencies {
     implementation("androidx.hilt:hilt-work:1.1.0")
     kapt ("androidx.hilt:hilt-compiler:1.1.0")
     implementation("androidx.work:work-runtime-ktx:2.9.0")
+    //
+    implementation ("com.android.volley:volley:1.2.1")
 
 
 
