@@ -44,6 +44,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.hackathonapp.R
 import com.example.hackathonapp.items.CustomSearchItem
 import com.example.hackathonapp.items.infoItem
@@ -51,7 +52,7 @@ import com.example.hackathonapp.items.portItem
 import com.example.hackathonapp.model.Ship
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -297,9 +298,9 @@ fun portFilter(states: List<String>) {
 }
 
 
-@Preview
-@Composable
-private fun HomeScreenPrev() {
-    HomeScreen()
-}
+//@Preview
+//@Composable
+//private fun HomeScreenPrev() {
+//    HomeScreen(navController)
+//}
 

@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.hackathonapp.R
 import com.example.hackathonapp.items.InteractivePortMap
 import com.example.hackathonapp.model.Quay
@@ -32,7 +33,7 @@ import com.example.hackathonapp.model.Ship
 
 
 @Composable
-fun MapScreen() {
+fun MapScreen(navController: NavHostController) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -112,11 +113,11 @@ fun MapScreen() {
 }
 
 
-@Preview
-@Composable
-private fun MapScreenPrev() {
-    MapScreen()
-}
+//@Preview
+//@Composable
+//private fun MapScreenPrev() {
+//    MapScreen(navController)
+//}
 
 
 // Sample data (replace with your actual data source)

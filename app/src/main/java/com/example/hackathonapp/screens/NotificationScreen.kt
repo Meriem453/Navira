@@ -1,7 +1,6 @@
 package com.example.hackathonapp.screens
 
-import android.graphics.drawable.Icon
-import androidx.compose.foundation.Image
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -34,12 +33,14 @@ fun NotificationScreen(notifications: List<Notification>) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Notifications")
-                },
+                title = { Text("Notifications") },
                 navigationIcon = {
                     IconButton(
                         onClick = { /*TODO*/ }) {
-                        androidx.compose.material3.Icon(painter = painterResource(id = R.drawable.back), contentDescription = "")
+                        Icon(
+                            painter = painterResource(id = R.drawable.arrow_back),
+                            contentDescription = "Menu icon",
+                        )
                     }
                 },
             )
