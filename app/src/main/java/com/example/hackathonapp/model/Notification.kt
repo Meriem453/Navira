@@ -5,7 +5,8 @@ import com.example.hackathonapp.R
 data class Notification(
     val message : String,
     val iconResId : Int,
-    val date : String
+    val date : String,
+    val ship:String
 ) {
 }
 

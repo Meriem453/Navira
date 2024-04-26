@@ -39,10 +39,7 @@ class NotificationsService(
     }
 
     companion object {
-        const val NEWS_CHANNEL_ID = "news_channel_id"
-        const val OBJECTS_CHANNEL_ID = "Objects_channel_id"
-        const val COMPLAINTS_CHANNEL_ID = "complaints_channel_id"
-        const val SERVICES_CHANNEL_ID = "services_channel_id"
+
         const val NOTIFICATIONS_CHANNEL_ID = "notifications_channel_id"
     }
 }
