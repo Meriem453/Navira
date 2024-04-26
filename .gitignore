@@ -1,5 +1,6 @@
 *.iml
 .gradle
+/app/src/main/res/raw/ships.mp4
 /local.properties
 /.idea/caches
 /.idea/libraries
