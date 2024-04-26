@@ -65,5 +65,5 @@ fun Quay(quay: Quay) {
 @Preview
 @Composable
 fun QuayPrev() {
-    Quay(Quay(1, true, null))
+    Quay(Quay("1", true, null))
 }
