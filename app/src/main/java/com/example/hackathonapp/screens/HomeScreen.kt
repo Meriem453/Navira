@@ -141,7 +141,8 @@ fun MyShips() {
     val sampleShips = listOf(
         Ship(1, "Cargo Ship 1", "Active", 2, 50),
         Ship(2, "Petroleum Tanker 2", "Docked", 1, 75),
-        Ship(3, "Passenger Cruise 3", "Waiting", 3, 100)
+        Ship(3, "Passenger Cruise 3", "Waiting", 3, 100),
+
     )
 
     Column(
@@ -192,11 +193,7 @@ fun MyShips() {
 fun PortStatus() {
     val states = listOf("Incoming", "In Quai","In Rade")
 
-    val sampleShips = listOf(
-        Ship(1, "Cargo Ship 1", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
-        Ship(2, "Cargo Ship 2", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
-        Ship(3, "Cargo Ship 1", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
-    )
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -228,7 +225,9 @@ fun portFilter(states: List<String>) {
         Ship(1, "Cargo Ship 1", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
         Ship(2, "Cargo Ship 2", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
         Ship(3, "Cargo Ship 1", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
-    )
+        Ship(3, "Cargo Ship 1", "Active", 2, 50,"In Rade","25/04/2024","MARSEILLE"),
+
+        )
 
     var expanded by remember { mutableStateOf(false) }
     var state_name by remember { mutableStateOf("Incoming") }
