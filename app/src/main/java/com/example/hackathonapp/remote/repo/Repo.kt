@@ -197,7 +197,7 @@ class Repo @Inject constructor(
             }
         }
     }
-    fun myShipInfo(ship){
+    fun myShipInfo(){
         getAllShips {
             if (it is Resource.Success){
 
@@ -211,11 +211,11 @@ class Repo @Inject constructor(
                 val notif = arrayListOf<Notification>()
                 for (document in it) {
                     val date = document.get("date").toString()
-                    val message = document.get("message") as Long
+                    val message = document.get("message") as String
                     val ship : String=document.get("ship") as String
-                    val state : Boolean=document.get("priority") as Boolean
+                    val state : Boolean=document.get("state") as Boolean
 
-                    notif.add(Notification(message.toString(),state,date,ship))
+                    notif.add(Notification(message,state,date,ship))
                 }
             }
             .addOnFailureListener {}
@@ -225,7 +225,7 @@ class Repo @Inject constructor(
             .get()
             .addOnSuccessListener {
                 val quays = arrayListOf<Quay>()
-                for (document in it) {
+                for (q in it) {
                     val available = q.get("available") as Boolean
                     val id = q.get("id") .toString()
                     val occupiedBy  : String=q.get("occupiedBy") as String
