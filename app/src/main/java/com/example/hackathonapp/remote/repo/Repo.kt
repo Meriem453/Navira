@@ -222,7 +222,7 @@ class Repo @Inject constructor(
             }
         }
     }
-    fun getAllNotif(){
+    fun getAllNotif(result: (Resource<List<Notification>>) -> Unit){
         store.collection("notifications")
             .get()
             .addOnSuccessListener {
@@ -235,10 +235,11 @@ class Repo @Inject constructor(
 
                     notif.add(Notification(message,state,date,ship))
                 }
+                result(Resource.Success(notif,"Success"))
             }
             .addOnFailureListener {}
     }
-    fun getAllQuay(){
+    fun getAllQuay(result:(Resource<List<Quay>>)->Unit){
         store.collection("quay")
             .get()
             .addOnSuccessListener {
@@ -250,6 +251,7 @@ class Repo @Inject constructor(
                     quays.add(Quay(id,available,occupiedBy))
 
                 }
+                result(Resource.Success(quays,"Success"))
             }
             .addOnFailureListener {}
     }

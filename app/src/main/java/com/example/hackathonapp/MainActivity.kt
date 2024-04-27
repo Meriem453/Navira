@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
             HackathonAppTheme {
                 val c = LocalContext.current
                 // A surface container using the 'background' color from the theme
-                MainScreen(this)
+            MainScreen(this)
                // gettingstartedScreen(getVideoUri())
             }
         }
@@ -78,10 +78,8 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(activity: Activity) {
     val vm= hiltViewModel<LoginVM>()
     val c= LocalContext.current
-    vm.login("meriem","123456"){
-        Log.d("login","login")
-    }
-    vm.test(activity)
+
+    //vm.test(activity)
 
 
     val navController = rememberNavController()
