@@ -20,6 +20,23 @@ object Emergency: BottomBarDestinations {
     override val title = "Emergency"
 }
 
+object Login {
+     val route = "Login"
+     val title = "Login"
+}
+
+object Start {
+    val route = "Start"
+    val title = "Start"
+}
+
+object Notifications {
+    val route = "Notifications"
+    val title = "Notifications"
+}
+
+
+
 object Home: BottomBarDestinations {
     override val route = "Home"
     override val icon = R.drawable.home

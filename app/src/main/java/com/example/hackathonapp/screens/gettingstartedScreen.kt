@@ -1,6 +1,7 @@
 package com.example.hackathonapp.screens
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
@@ -42,12 +43,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavHostController
 import com.example.hackathonapp.R
 import com.example.hackathonapp.items.NewsTextButton
 import com.example.hackathonapp.items.OnBoardingButton
 import com.example.hackathonapp.items.PagerIndicator
 import com.example.hackathonapp.model.OnBoardingPage
 import com.example.hackathonapp.model.pages
+import com.example.hackathonapp.navigations.Home
+import com.example.hackathonapp.navigations.Login
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -60,12 +64,12 @@ import kotlinx.coroutines.launch
 
 
 @SuppressLint("RememberReturnType")
-@OptIn( ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
 @Composable
-fun gettingstartedScreen(videoUri: Uri) {
+fun gettingstartedScreen(navController: NavHostController) {
 
     val context = LocalContext.current
-
+    val videoUri = getVideoUri(LocalContext.current)
     val exoPlayer = remember { context.buildExoPlayer(videoUri!!) }
 
     DisposableEffect(
@@ -80,10 +84,11 @@ fun gettingstartedScreen(videoUri: Uri) {
     }
 
     ProvideWindowInsets {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xff2980B9).copy(alpha = .4f))
-            .padding(10.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xff2980B9).copy(alpha = .4f))
+                .padding(10.dp)
 
         ) {
 
@@ -102,7 +107,7 @@ fun gettingstartedScreen(videoUri: Uri) {
                 }
             }
             HorizontalPager(state = pagerState) { index ->
-                OnBoardingPage(page= pages[index])
+                OnBoardingPage(page = pages[index])
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -140,9 +145,9 @@ fun gettingstartedScreen(videoUri: Uri) {
                         text = buttonsState.value[1],
                         onClick = {
                             scope.launch {
-                                if (pagerState.currentPage == 3){
-                                    //Navigate to the main screen and save a value in datastore preferences
-                                }else{
+                                if (pagerState.currentPage == 2) {
+                                    navController.navigate(Login.route)
+                                } else {
                                     pagerState.animateScrollToPage(
                                         page = pagerState.currentPage + 1
                                     )
@@ -155,9 +160,6 @@ fun gettingstartedScreen(videoUri: Uri) {
             Spacer(modifier = Modifier.weight(0.5f))
         }
     }
-
-
-
 
 
 }
@@ -179,6 +181,11 @@ private fun Context.buildPlayerView(exoPlayer: ExoPlayer) =
         resizeMode = RESIZE_MODE_ZOOM
     }
 
+private fun getVideoUri(activity: Context): Uri {
+    val rawId = activity.resources.getIdentifier("ships", "raw", activity.packageName)
+    val videoUri = "android.resource://$activity.packageName/$rawId"
+    return Uri.parse(videoUri)
+}
 
 
 

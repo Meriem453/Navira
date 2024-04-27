@@ -1,6 +1,7 @@
 package com.example.hackathonapp.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,15 +28,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.hackathonapp.R
 import com.example.hackathonapp.ViewModels.MapVM
 import com.example.hackathonapp.items.InteractivePortMap
 import com.example.hackathonapp.model.Quay
 import com.example.hackathonapp.model.Ship
+import com.example.hackathonapp.navigations.Home
 
 @Composable
-fun MapScreen() {
+fun MapScreen(navController: NavHostController) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -61,7 +64,9 @@ fun MapScreen() {
                     painter = painterResource(id = R.drawable.back),
                     contentDescription = "background",
                     contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.size(50.dp)
+                    modifier = Modifier
+                        .size(50.dp)
+                        .clickable { navController.navigate(Home.route) }
                 )
 
                 Spacer(Modifier.weight(1f))
@@ -108,12 +113,12 @@ fun MapScreen() {
 
                     Image(painter = painterResource(id = R.drawable.map_horizontal_devider), contentDescription = null,Modifier.fillMaxSize())
                     InteractivePortMap(ships = list, quays = quay)
-                    vm.getALlShips {
+                    /*vm.getALlShips {
                         list=it
                     }
                     vm.getALlQuay {
                         quay = it
-                    }
+                    }*/
 
                 }
 
@@ -142,18 +147,18 @@ val sampleShips = listOf(
 
 val sampleQuays = listOf(
     Quay("Q1", true, null),
-    Quay("Q2", true, "2"), // Quay occupied by ship with ID 2
+    Quay("Q2", false, "2"), // Quay occupied by ship with ID 2
     Quay("Q3", true, null),
     Quay("Q4", true, null),
+    Quay("Q3", false, null),
+    Quay("Q4", false, null),
     Quay("Q3", true, null),
     Quay("Q4", true, null),
-    Quay("Q3", true, null),
+    Quay("Q3", false, null),
     Quay("Q4", true, null),
     Quay("Q3", true, null),
-    Quay("Q4", true, null),
-    Quay("Q3", true, null),
-    Quay("Q4", true, null),
-    Quay("Q3", true, null),
+    Quay("Q4", false, null),
+    Quay("Q3", false, null),
     Quay("Q4", true, null),
 
     )

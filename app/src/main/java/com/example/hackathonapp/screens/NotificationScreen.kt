@@ -1,6 +1,7 @@
 package com.example.hackathonapp.screens
 
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,18 +19,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.hackathonapp.R
 import com.example.hackathonapp.items.NotificationItem
 import com.example.hackathonapp.model.Notification
 import com.example.hackathonapp.model.sampleNotifications
-
-
-
+import com.example.hackathonapp.navigations.Home
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotificationScreen(notifications: List<Notification>) {
+fun NotificationScreen(navController: NavHostController, notifications: List<Notification>) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -40,6 +41,7 @@ fun NotificationScreen(notifications: List<Notification>) {
                         Icon(
                             painter = painterResource(id = R.drawable.arrow_back),
                             contentDescription = "Menu icon",
+                            modifier = Modifier.clickable { navController.navigate(Home.route) }
                         )
                     }
                 },
@@ -63,9 +65,4 @@ fun NotificationScreen(notifications: List<Notification>) {
             }
         }
     }
-}
-@Preview
-@Composable
-fun NotificationScreenPrev(){
-    NotificationScreen(sampleNotifications)
 }

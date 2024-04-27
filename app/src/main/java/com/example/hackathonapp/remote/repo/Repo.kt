@@ -65,14 +65,23 @@ class Repo @Inject constructor(
                 val ships = arrayListOf<Ship>()
                 for (document in it) {
                     val name = document.get("name").toString()
-                    val id = document.get("id") as Long
+
+                    try {
+                        val id = document.get("id") as Long
+
+                    }catch (e:Exception){
+                        Log.d("unique",e.localizedMessage)
+
+                    }
                     val state : String=document.get("state").toString()
                     val priority =document.get("priority").toString()
                     val size =document.get("size").toString()
                     val type:String=document.get("type").toString()
                     val ETA:String=document.get("ETA").toString()
                     val origin:String=document.get("origin").toString()
-                    ships.add(Ship(id = id,name,state, priority.toLong(), size.toLong(), type, ETA, origin))
+                    val ship = Ship(id = 1,name,state, priority.toLong(), size.toLong(), type, ETA, origin)
+
+
                 }
                 result(Resource.Success(ships,"Success")
                     )

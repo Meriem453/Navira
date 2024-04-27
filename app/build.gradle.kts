@@ -109,5 +109,7 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-pager:0.12.0") //This dependency is used for Horizontal Pager.
     implementation ("com.google.accompanist:accompanist-pager-indicators:0.12.0")
 
+    implementation ("io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc")
+
 
 }

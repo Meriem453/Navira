@@ -40,12 +40,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.hackathonapp.ViewModels.LoginVM
 import com.example.hackathonapp.navigations.Emergency
 import com.example.hackathonapp.navigations.Home
+import com.example.hackathonapp.navigations.Login
 import com.example.hackathonapp.navigations.Map
 import com.example.hackathonapp.navigations.Navigation
+import com.example.hackathonapp.navigations.Start
 import com.example.hackathonapp.screens.HomeScreen
 import com.example.hackathonapp.screens.LoginScreen
 import com.example.hackathonapp.screens.gettingstartedScreen
@@ -65,19 +68,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HackathonAppTheme {
-                val c = LocalContext.current
+
                 // A surface container using the 'background' color from the theme
-            MainScreen(this)
-               // gettingstartedScreen(getVideoUri())
+                 MainScreen()
             }
         }
     }
 
-    private fun getVideoUri(): Uri {
-        val rawId = resources.getIdentifier("ships", "raw", packageName)
-        val videoUri = "android.resource://$packageName/$rawId"
-        return Uri.parse(videoUri)
-    }
+
 }
 
 
@@ -85,82 +83,18 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(activity: Activity) {
-    val vm= hiltViewModel<LoginVM>()
-    val c= LocalContext.current
+fun MainScreen() {
 
     //vm.test(activity)
 
-
     val navController = rememberNavController()
-
-    val destinationsList = listOf(Home, Map)
-    var selectedIndex by rememberSaveable {
-        mutableIntStateOf(0)
-    }
-
-    Scaffold(
-        bottomBar = {
-
-            NavigationBar(modifier = Modifier.height(62.dp)) {
-                destinationsList.forEachIndexed { index, screen ->
-                    if (index == 1) {
-                        NavigationBarItem(
-                            icon = {
-
-                                Icon(
-                                    painter = painterResource(id = screen.icon),
-                                    contentDescription = "icon",
-                                    modifier = Modifier
-                                        .size(55.dp)
-                                        .clip(CircleShape)
-                                        .background(Color(0xff002C70))
-                                        .padding(13.dp),
-                                    tint = Color.White
-                                )
-
-
-                            },
-                            selected = selectedIndex == index,
-                            onClick = {
-                                selectedIndex = index
-
-                            },
-                            colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = Color(0xff002C70),
-                                unselectedIconColor = Color(0xff002C70)
-
-                            )
-
-                        )
-                    } else {
-                        NavigationBarItem(
-                            icon = {
-                                Icon(
-                                    painter = painterResource(id = screen.icon),
-                                    contentDescription = "icon"
-                                )
-                            },
-                            selected = selectedIndex == index,
-                            onClick = {
-                                selectedIndex = index
-                                navController.navigate(destinationsList[selectedIndex].route) {
-                                    popUpTo(Home.route)
-                                    launchSingleTop = true
-                                }
-                            })
-                    }
-                }
-            }
-        }
-    ) {
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
+
         ) {
             Navigation(navController = navController)
         }
-    }
+
 }

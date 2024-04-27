@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.hackathonapp.Domaine.Resource
 import com.example.hackathonapp.R
 import com.example.hackathonapp.ViewModels.LoginVM
 import com.example.hackathonapp.items.MyTextField
@@ -55,12 +56,12 @@ fun LoginScreen(navController: NavController) {
 
     val scrollState = rememberScrollState()
 
-val vm = hiltViewModel<LoginVM>()
+    val vm = hiltViewModel<LoginVM>()
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-
 
         Image(
             painter = painterResource(id = R.drawable.loginbg),
@@ -77,9 +78,9 @@ val vm = hiltViewModel<LoginVM>()
                 .padding(28.dp)
 
 
-            ) {
+        ) {
             Spacer(
-                modifier = Modifier.fillMaxHeight (.3f),
+                modifier = Modifier.fillMaxHeight(.3f),
             )
 
             Text(
@@ -90,8 +91,7 @@ val vm = hiltViewModel<LoginVM>()
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 10.dp)
-                ,
+                    .padding(horizontal = 10.dp),
                 textAlign = TextAlign.Start
             )
             Text(
@@ -102,17 +102,16 @@ val vm = hiltViewModel<LoginVM>()
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp)
-                ,
+                    .padding(10.dp),
                 textAlign = TextAlign.Start
             )
 
             Spacer(
-                modifier = Modifier.fillMaxHeight (.1f),
+                modifier = Modifier.fillMaxHeight(.1f),
             )
 
             var shipName by remember { mutableStateOf("") }
-            var shipPassword by remember { mutableStateOf("") }
+            var shipId by remember { mutableStateOf("") }
 
             SimpleTextField(
                 labelValue = "Enter Ship Name",
@@ -135,9 +134,9 @@ val vm = hiltViewModel<LoginVM>()
                     .padding(vertical = 10.dp)
                     .fillMaxWidth(0.9f)
                     .align(Alignment.CenterHorizontally),
-                KeyboardOptions(keyboardType = KeyboardType.Number),
+                KeyboardOptions(keyboardType = KeyboardType.Password),
                 onTextChanged = {
-                    shipPassword = it
+                    shipId = it
                 },
                 true
             )
@@ -149,7 +148,11 @@ val vm = hiltViewModel<LoginVM>()
                     .fillMaxWidth(0.9f)
                     .align(Alignment.CenterHorizontally),
                 onButtonClicked = {
-                     navController.navigate(Home.route)
+                    vm.login(shipName = shipName, id = shipId) {
+                        if (it is Resource.Success) {
+                            navController.navigate(Home.route)
+                        }
+                    }
                 },
                 isEnabled = true
 
