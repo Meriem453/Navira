@@ -42,12 +42,12 @@ import com.google.android.exoplayer2.ui.AspectRatioFrameLayout.RESIZE_MODE_ZOOM
 import com.google.android.exoplayer2.ui.StyledPlayerView
 
 @Composable
-fun gettingstartedScreen(videoUri: Uri?) {
+fun gettingstartedScreen() {
 
     val context = LocalContext.current
-    val exoPlayer = remember { context.buildExoPlayer(videoUri!!) }
+   // val exoPlayer = remember { context.buildExoPlayer(videoUri!!) }
 
-    DisposableEffect(
+  /*  DisposableEffect(
         AndroidView(
             factory = { it.buildPlayerView(exoPlayer) },
             modifier = Modifier.fillMaxSize()
@@ -60,30 +60,29 @@ fun gettingstartedScreen(videoUri: Uri?) {
 
     ProvideWindowInsets {
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xff2980B9).copy(alpha = .5f)),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "Welcome Aboard!",
-                fontSize = 36.sp,
-                color = Color.White
-            )
+    }*/
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xff2980B9).copy(alpha = .5f)),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Welcome Aboard!",
+            fontSize = 36.sp,
+            color = Color.White
+        )
 
-            Text(
-                text = stringResource(id = R.string.high_seas),
-                fontSize = 18.sp,
-                color = Color.White,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
+        Text(
+            text = stringResource(id = R.string.high_seas),
+            fontSize = 18.sp,
+            color = Color.White,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
 
-        }
     }
-
 
 }
 
@@ -104,5 +103,10 @@ private fun Context.buildPlayerView(exoPlayer: ExoPlayer) =
         resizeMode = RESIZE_MODE_ZOOM
     }
 
+@Preview
+@Composable
+private fun gettingStartedprev() {
+    gettingstartedScreen()
+}
 
 

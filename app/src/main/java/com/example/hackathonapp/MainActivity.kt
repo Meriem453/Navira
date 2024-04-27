@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -31,6 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.hackathonapp.navigations.Home
 import com.example.hackathonapp.navigations.Map
 import com.example.hackathonapp.navigations.Navigation
+import com.example.hackathonapp.screens.gettingstartedScreen
 import com.example.hackathonapp.ui.theme.HackathonAppTheme
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -48,7 +50,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             HackathonAppTheme {
                 // A surface container using the 'background' color from the theme
-             gettingstartedScreen(getVideoUri())
+               // MainScreen()
+               // gettingstartedScreen(getVideoUri())
             }
         }
     }
@@ -57,8 +60,6 @@ class MainActivity : ComponentActivity() {
         val rawId = resources.getIdentifier("ships", "raw", packageName)
         val videoUri = "android.resource://$packageName/$rawId"
         return Uri.parse(videoUri)
-            MainScreen()
-        }
     }
 }
 
@@ -67,11 +68,11 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(){
+fun MainScreen() {
 
     val navController = rememberNavController()
 
-    val destinationsList = listOf (Home, Map)
+    val destinationsList = listOf(Home, Map)
     var selectedIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
@@ -80,17 +81,18 @@ fun MainScreen(){
         bottomBar = {
 
             NavigationBar() {
-                destinationsList.forEachIndexed{index, screen ->
+                destinationsList.forEachIndexed { index, screen ->
                     NavigationBarItem(
                         icon = {
                             Icon(
                                 painter = painterResource(id = screen.icon),
-                                contentDescription = "icon")
+                                contentDescription = "icon"
+                            )
                         },
                         selected = selectedIndex == index,
                         onClick = {
                             selectedIndex = index
-                            navController.navigate(destinationsList[selectedIndex].route){
+                            navController.navigate(destinationsList[selectedIndex].route) {
                                 popUpTo(Home.route)
                                 launchSingleTop = true
                             }
@@ -104,7 +106,7 @@ fun MainScreen(){
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
-        ){
+        ) {
             Navigation(navController = navController)
         }
     }
