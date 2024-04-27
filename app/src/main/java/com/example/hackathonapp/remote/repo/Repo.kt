@@ -96,13 +96,14 @@ class Repo @Inject constructor(
                 for (i in it.data!!){
                     if(i.size==ship.size && i.priority>ship.priority){
                         found=true
-
+                                    Log.d("jojo","cond")
                         notification.showNotification(
                             "Ready to queue",
                             NotificationsService.NOTIFICATIONS_CHANNEL_ID,
                             Random().nextInt(100),
                             "Ship status updated"
                         )
+
                         //update ship status
 
                        /* val document = store.collection("ships").document(ship.id.toString())
@@ -165,8 +166,10 @@ class Repo @Inject constructor(
                                     val id = u.get("id") .toString()
                                     users.add(users(id, token))
                                 }
-                                val tuser=users.filter { it.id==i.name }
+                                val tuser=users.filter { it.id=="meriem" }
+
                                 for (k in tuser){
+
                                     val notif=NotificationSender(
                                         k.token,"Ship status updated","You must give your place",activity
                                     )
@@ -177,6 +180,7 @@ class Repo @Inject constructor(
 
                             }
                             .addOnFailureListener { }
+                        break
                        /* //add notification
                         val document6 = store.collection("notifications").document()
                         document6

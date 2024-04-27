@@ -5,8 +5,9 @@ import android.content.Context
 import com.example.hackathonapp.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
+@AndroidEntryPoint
 class NotificationReceiver @Inject constructor(
     private val context: Application
 ): FirebaseMessagingService() {
