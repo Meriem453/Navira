@@ -10,13 +10,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -132,7 +142,8 @@ fun MyShips() {
     val sampleShips = listOf(
         Ship(1, "Cargo Ship 1", "Active", 2, 50),
         Ship(2, "Petroleum Tanker 2", "Docked", 1, 75),
-        Ship(3, "Passenger Cruise 3", "Waiting", 3, 100)
+        Ship(3, "Passenger Cruise 3", "Waiting", 3, 100),
+
     )
 
     Column(
@@ -183,11 +194,7 @@ fun MyShips() {
 fun PortStatus() {
     val states = listOf("Incoming", "In Quai","In Rade")
 
-    val sampleShips = listOf(
-        Ship(1, "Cargo Ship 1", "Active", 2, 50),
-        Ship(2, "Petroleum Tanker 2", "Docked", 1, 75),
-        Ship(3, "Passenger Cruise 3", "Waiting", 3, 100)
-    )
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -196,24 +203,97 @@ fun PortStatus() {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp)
+                .padding(0.dp)
             ,
             elevation = CardDefaults.cardElevation(10.dp),
             colors = CardDefaults.cardColors(Color.White)
 
         ) {
             Spacer(modifier = Modifier.height(10.dp))
-            portItem(states)
-            Column() {
-                infoItem(icon =  R.drawable.arrow_repeat, infotype = "Ship state", shipinfo = sampleShips[0].state)
-                infoItem(icon =  R.drawable.box, infotype = "Type", shipinfo = sampleShips[0].state)
-                infoItem(icon =  R.drawable.clock_history, infotype = "ETA", shipinfo = sampleShips[0].state)
-                infoItem(icon =  R.drawable.globe_americas, infotype = "Origin", shipinfo = sampleShips[0].state)
-
-            }
+            portFilter(states)
+            Spacer(modifier = Modifier.height(10.dp))
 
         }
     }
+
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun portFilter(states: List<String>) {
+
+    val sampleShips = listOf(
+        Ship(1, "Cargo Ship 1", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
+        Ship(2, "Cargo Ship 2", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
+        Ship(3, "Cargo Ship 1", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
+        Ship(3, "Cargo Ship 1", "Active", 2, 50,"In Rade","25/04/2024","MARSEILLE"),
+
+        )
+
+    var expanded by remember { mutableStateOf(false) }
+    var state_name by remember { mutableStateOf("Incoming") }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = {
+            expanded = !expanded
+        }
+    ) {
+
+        TextField(
+            value = state_name ?: "", onValueChange = { },
+            modifier = Modifier
+                .fillMaxWidth()
+                .menuAnchor()
+                .padding(start = 20.dp, end = 20.dp)
+                .clip(RoundedCornerShape(10.dp)),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White
+            ),
+            placeholder = {
+                Text(
+                    text = "Enter meeting's team",
+                    fontSize = 15.sp,
+                    color = Color.Gray,
+
+                    )
+            },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(
+                    expanded = expanded
+                )
+            }, readOnly = true
+
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = {
+                expanded = false
+            },
+            modifier = Modifier.background(Color.White)
+        ) {
+
+            states.forEachIndexed() { position, selectionOption ->
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = selectionOption,
+                            color = Color.Black,
+                            fontSize = 16.sp
+                        )
+                    },
+                    onClick = {
+                        state_name = selectionOption
+                        expanded = false
+
+                    }
+                )
+
+            }
+        }
+    }
+    portItem(sampleShips,state_name)
 
 }
 

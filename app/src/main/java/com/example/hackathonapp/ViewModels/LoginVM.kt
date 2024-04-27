@@ -13,7 +13,7 @@ class LoginVM @Inject constructor(
 ):ViewModel() {
 
 
-fun login(ship:String,id:String,result:(Resource<String>)->Unit){
-    repo.loginUser(ship,id,result)
+fun login(shipName:String,id:String,result:(Resource<String>)->Unit){
+    repo.loginUser(shipName,id,result)
 }
 }
