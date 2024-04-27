@@ -65,12 +65,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HackathonAppTheme {
-                val navController = rememberNavController()
                 val c = LocalContext.current
                 // A surface container using the 'background' color from the theme
-                //MainScreen(this)
-                // gettingstartedScreen(getVideoUri())
-                LoginScreen(navController = navController )
+            MainScreen(this)
+               // gettingstartedScreen(getVideoUri())
             }
         }
     }
@@ -88,17 +86,15 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(activity: Activity) {
-    val vm = hiltViewModel<LoginVM>()
-    val c = LocalContext.current
-    vm.login("meriem", "123456") {
-        Log.d("login", "login")
-    }
-    vm.test(activity)
+    val vm= hiltViewModel<LoginVM>()
+    val c= LocalContext.current
+
+    //vm.test(activity)
 
 
     val navController = rememberNavController()
 
-    val destinationsList = listOf(Home, Emergency, Map)
+    val destinationsList = listOf(Home, Map)
     var selectedIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
@@ -167,76 +163,4 @@ fun MainScreen(activity: Activity) {
             Navigation(navController = navController)
         }
     }
-}
-
-@Composable
-fun bottombar() {
-
-    val navController = rememberNavController()
-
-    val destinationsList = listOf(Home, Emergency, Map)
-    var selectedIndex by rememberSaveable {
-        mutableIntStateOf(0)
-    }
-
-    NavigationBar(modifier = Modifier.height(60.dp)) {
-        destinationsList.forEachIndexed { index, screen ->
-            if (index == 1) {
-                NavigationBarItem(
-                    icon = {
-
-                        Icon(
-                            painter = painterResource(id = screen.icon),
-                            contentDescription = "icon",
-                            modifier = Modifier
-                                .size(55.dp)
-                                .clip(CircleShape)
-                                .background(Color(0xff002C70))
-                                .padding(13.dp),
-                            tint = Color.White
-                        )
-
-
-                    },
-                    selected = selectedIndex == index,
-                    onClick = {
-                        selectedIndex = index
-                        navController.navigate(destinationsList[selectedIndex].route) {
-                            popUpTo(Home.route)
-                            launchSingleTop = true
-                        }
-                    },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = Color(0xff002C70),
-                        unselectedIconColor = Color(0xff002C70)
-
-                    )
-
-                )
-            } else {
-                NavigationBarItem(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = screen.icon),
-                            contentDescription = "icon"
-                        )
-                    },
-                    selected = selectedIndex == index,
-                    onClick = {
-                        selectedIndex = index
-                        navController.navigate(destinationsList[selectedIndex].route) {
-                            popUpTo(Home.route)
-                            launchSingleTop = true
-                        }
-                    })
-            }
-        }
-    }
-
-}
-
-@Preview
-@Composable
-private fun bottombarprev() {
-    bottombar()
 }
