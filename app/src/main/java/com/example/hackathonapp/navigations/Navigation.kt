@@ -25,7 +25,7 @@ fun Navigation(navController: NavHostController){
         Notification("Queue full, please wait for availability.", false, "2024-04-25","123456")
     )
 
-    NavHost(navController = navController, startDestination = Home.route){
+    NavHost(navController = navController, startDestination = Start.route){
         composable(route = Home.route){
             HomeScreen(navController)
         }

@@ -314,7 +314,7 @@ fun MyShips() {
 
 
     val sampleShips = listOf(
-        Ship(1, "Cargo Ship 1", "Active", 2, 50),
+        Ship(1, "Ship1", "Incoming", 2, 50, "Active", "25/04/2024", "MARSEILLE"),
         Ship(2, "Petroleum Tanker 2", "Docked", 1, 75),
         Ship(3, "Passenger Cruise 3", "Waiting", 3, 100),
     )
@@ -322,7 +322,9 @@ fun MyShips() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState),
+            .verticalScroll(scrollState)
+            .padding(vertical = 40.dp)
+        ,
 
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -358,16 +360,16 @@ fun MyShips() {
                     infotype = "Ship state",
                     shipinfo = sampleShips[0].state
                 )
-                infoItem(icon = R.drawable.box, infotype = "Type", shipinfo = sampleShips[0].state)
+                infoItem(icon = R.drawable.box, infotype = "Type", shipinfo = sampleShips[0].type)
                 infoItem(
                     icon = R.drawable.clock_history,
                     infotype = "ETA",
-                    shipinfo = sampleShips[0].state
+                    shipinfo = sampleShips[0].ETA
                 )
                 infoItem(
                     icon = R.drawable.globe_americas,
                     infotype = "Origin",
-                    shipinfo = sampleShips[0].state
+                    shipinfo = sampleShips[0].origin
                 )
 
             }
