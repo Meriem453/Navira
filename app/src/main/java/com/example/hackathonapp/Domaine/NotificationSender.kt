@@ -15,7 +15,6 @@ import org.json.JSONObject
 class NotificationSender( var userFcmToken: String,
                           var title: String,
                           var body: String,
-                          var mContext: Context,
                           var mActivity: Activity) {
 
 

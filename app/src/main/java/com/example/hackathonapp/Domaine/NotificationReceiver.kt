@@ -18,7 +18,6 @@ class NotificationReceiver @Inject constructor(
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
         NotificationsService(context).showNotification("Test",
-            NotificationsService.NOTIFICATIONS_CHANNEL_ID,0,"test",
-            MainActivity::class.java)
+            NotificationsService.NOTIFICATIONS_CHANNEL_ID,0,"test")
     }
 }

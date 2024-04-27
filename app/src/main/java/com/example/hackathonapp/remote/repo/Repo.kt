@@ -40,7 +40,7 @@ class Repo @Inject constructor(
                                     val token = task.result
                                     val document = store.collection("users").document()
                                     document
-                                        .set(users(password,token))
+                                        .set(users(email,token))
                                         .addOnSuccessListener {
                                             result.invoke(
                                          Resource.Success("token","token")
@@ -49,10 +49,7 @@ class Repo @Inject constructor(
                                         .addOnFailureListener {
                                             result.invoke(Resource.Failed("failed"))
                                         }
-
                                 }
-
-
 
                             })
 
@@ -69,13 +66,13 @@ class Repo @Inject constructor(
                 for (document in it) {
                     val name = document.get("name").toString()
                     val id = document.get("id") as Long
-                    val state : String=document.get("id") as String
-                    val priority : Int=document.get("priority") as Int
-                    val size : Int=document.get("size") as Int
-                    val type:String=document.get("type") as String
-                    val ETA:String=document.get("ETA") as String
-                    val origin:String=document.get("origin") as String
-                    ships.add(Ship(id = id,name,state, priority, size, type, ETA, origin))
+                    val state : String=document.get("state").toString()
+                    val priority =document.get("priority").toString()
+                    val size =document.get("size").toString()
+                    val type:String=document.get("type").toString()
+                    val ETA:String=document.get("ETA").toString()
+                    val origin:String=document.get("origin").toString()
+                    ships.add(Ship(id = id,name,state, priority.toLong(), size.toLong(), type, ETA, origin))
                 }
                 result(Resource.Success(ships,"Success")
                     )
@@ -86,24 +83,29 @@ class Repo @Inject constructor(
                 )
             }
     }
-    fun declareEmergency(ship:Ship,activity: Activity,`class`:Class<*>, result: (Resource<List<Ship>>) -> Unit){
+    fun declareEmergency(activity: Activity, result: (Resource<List<Ship>>) -> Unit){
+        val email = auth.currentUser?.email
         //search for an empty quay
         getAllShips {
             if(it is Resource.Success){
+
+                //try {
+
+                val ship=it.data!!.filter { it.name==email!!.split("@")[0] }[0]
                 var found=false
                 for (i in it.data!!){
-                    if(i.size==ship.size && i.priority<ship.priority){
+                    if(i.size==ship.size && i.priority>ship.priority){
                         found=true
+
                         notification.showNotification(
                             "Ready to queue",
                             NotificationsService.NOTIFICATIONS_CHANNEL_ID,
                             Random().nextInt(100),
-                            "Ship status updated",
-                            `class`
+                            "Ship status updated"
                         )
                         //update ship status
 
-                        val document = store.collection("ships").document(ship.id.toString())
+                       /* val document = store.collection("ships").document(ship.id.toString())
                          ship.state="quay"
 
                         document
@@ -153,7 +155,7 @@ class Repo @Inject constructor(
 
                             }
                             .addOnFailureListener { }
-                        //send notification to desired ship to quit
+                        //send notification to desired ship to quit*/
                         store.collection("users")
                             .get()
                             .addOnSuccessListener {
@@ -163,10 +165,10 @@ class Repo @Inject constructor(
                                     val id = u.get("id") .toString()
                                     users.add(users(id, token))
                                 }
-                                val tuser=users.filter { it.id==i.id.toString() }
+                                val tuser=users.filter { it.id==i.name }
                                 for (k in tuser){
                                     val notif=NotificationSender(
-                                        k.token,"Ship status updated","You must give your place",app,activity
+                                        k.token,"Ship status updated","You must give your place",activity
                                     )
                                     notif.SendNotifications()
 
@@ -175,7 +177,7 @@ class Repo @Inject constructor(
 
                             }
                             .addOnFailureListener { }
-                        //add notification
+                       /* //add notification
                         val document6 = store.collection("notifications").document()
                         document6
                             .set(Notification("Ship status updated",false,LocalDate.now().toString(),i.id.toString()))
@@ -191,10 +193,22 @@ class Repo @Inject constructor(
                             .addOnSuccessListener {}
                             .addOnFailureListener {}
 
-
+*/
                     }
                 }
-            }
+                if (!found){
+                    notification.showNotification(
+                        "Queue full please wait for the availability",
+                        NotificationsService.NOTIFICATIONS_CHANNEL_ID,
+                        Random().nextInt(100),
+                        "Ship status updated"
+                    )
+                }
+           /* }catch (e:Exception){
+                result(Resource.Failed(e.localizedMessage))
+                    Log.d("exe",e.localizedMessage)
+
+                }     */       }
         }
     }
     fun myShipInfo(){
