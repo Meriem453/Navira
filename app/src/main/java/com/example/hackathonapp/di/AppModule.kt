@@ -1,6 +1,7 @@
 package com.example.hackathonapp.di
 
 import android.app.Application
+import com.example.hackathonapp.Domaine.NotificationsService
 import com.example.hackathonapp.Domaine.SharedPrefManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,5 +36,10 @@ object AppModule {
     @Singleton
     fun provideFCMInstance(c: Application): FirebaseMessaging {
         return FirebaseMessaging.getInstance()
+    }
+    @Provides
+    @Singleton
+    fun provideNotifService(c: Application): NotificationsService {
+        return NotificationsService(c)
     }
     }

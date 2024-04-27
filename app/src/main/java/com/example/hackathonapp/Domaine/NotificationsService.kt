@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import com.example.hackathonapp.R
 
 
 class NotificationsService(
@@ -19,20 +20,21 @@ class NotificationsService(
         channelId: String,
         id: Int,
         notificationTitle: String,
-        activityClass: Class<*>
+        //activityClass: Class<*>
     ) {
-        val activityIntent = Intent(context,activityClass)
+        /*val activityIntent = Intent(context,activityClass)
         val activityPendingIntent = PendingIntent.getActivity(
             context,
             2,
             activityIntent,
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
-        )
+        )*/
 
         val notification = NotificationCompat.Builder(context, channelId)
             .setContentTitle(notificationTitle)
             .setContentText(notificationText)
-            .setContentIntent(activityPendingIntent)
+            .setSmallIcon(R.drawable.notif)
+            //.setContentIntent(activityPendingIntent)
             .build()
 
         notificationManager.notify(id, notification)

@@ -3,8 +3,10 @@ package com.example.hackathonapp
 import android.content.Context
 import android.net.Uri
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
 import android.widget.Toast
@@ -27,8 +29,11 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
+import com.example.hackathonapp.ViewModels.LoginVM
 import com.example.hackathonapp.navigations.Home
 import com.example.hackathonapp.navigations.Map
 import com.example.hackathonapp.navigations.Navigation
@@ -49,9 +54,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HackathonAppTheme {
+                val c = LocalContext.current
                 // A surface container using the 'background' color from the theme
-               // MainScreen()
+                MainScreen(this)
                // gettingstartedScreen(getVideoUri())
+
             }
         }
     }
@@ -68,7 +75,14 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(activity: Activity) {
+    val vm= hiltViewModel<LoginVM>()
+    val c= LocalContext.current
+    vm.login("meriem","123456"){
+        Log.d("login","login")
+    }
+    vm.test(activity)
+
 
     val navController = rememberNavController()
 
