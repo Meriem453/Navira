@@ -15,12 +15,12 @@ val pages = listOf(
     ),
 
     Page(
-        title = "Coordination",
+        title = "Navigate Seamlessly",
         description = "Effortlessly track and manage vessel positions with our user-friendly interface."
     ),
 
     Page(
-        title = "Dialogue",
+        title = "Get Started",
         description = "Let's set sail! Begin your voyage by creating your account and setting up your fleet."
     )
 )

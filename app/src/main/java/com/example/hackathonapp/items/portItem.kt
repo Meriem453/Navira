@@ -73,22 +73,28 @@ fun portItem(ships: List<Ship>, filteredState: String? = null) {
             Text(
                 text = ship.name,
                 color = Color.Black,
-
+                fontSize = 15.sp
                 )
 
             Text(
                 text = ship.type,
                 color = Color.Gray,
+                fontSize = 15.sp
+
             )
 
             Text(
                 text = ship.ETA,
                 color = Color.Gray,
+                fontSize = 15.sp
+
             )
 
             Text(
                 text = ship.origin,
                 color = Color.Gray,
+                fontSize = 15.sp
+
             )
 
         }

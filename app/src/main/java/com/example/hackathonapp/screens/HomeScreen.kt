@@ -2,6 +2,7 @@ package com.example.hackathonapp.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -86,7 +89,7 @@ fun HomeScreen(navController: NavHostController) {
             search = "Search..",
             onValueChange = {})
 
-        var state by remember { mutableStateOf(1) }
+        var state by remember { mutableStateOf(0) }
         val titles = listOf("My Ship", "Port Status")
 
 
@@ -138,15 +141,19 @@ fun HomeScreen(navController: NavHostController) {
 
 @Composable
 fun MyShips() {
+    val scrollState = rememberScrollState()
 
     val sampleShips = listOf(
         Ship(1, "Cargo Ship 1", "Active", 2, 50),
         Ship(2, "Petroleum Tanker 2", "Docked", 1, 75),
         Ship(3, "Passenger Cruise 3", "Waiting", 3, 100),
-
     )
 
     Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState),
+
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
@@ -159,8 +166,7 @@ fun MyShips() {
             text = "ATLANTIC MONACO",
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp)
-            ,
+                .padding(10.dp),
             textAlign = TextAlign.Start,
             color = Color.Black,
             fontSize = 30.sp,
@@ -170,18 +176,29 @@ fun MyShips() {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp)
-            ,
+                .padding(10.dp),
             elevation = CardDefaults.cardElevation(10.dp),
             colors = CardDefaults.cardColors(Color.White)
 
         ) {
             Spacer(modifier = Modifier.height(10.dp))
             Column() {
-                infoItem(icon =  R.drawable.arrow_repeat, infotype = "Ship state", shipinfo = sampleShips[0].state)
-                infoItem(icon =  R.drawable.box, infotype = "Type", shipinfo = sampleShips[0].state)
-                infoItem(icon =  R.drawable.clock_history, infotype = "ETA", shipinfo = sampleShips[0].state)
-                infoItem(icon =  R.drawable.globe_americas, infotype = "Origin", shipinfo = sampleShips[0].state)
+                infoItem(
+                    icon = R.drawable.arrow_repeat,
+                    infotype = "Ship state",
+                    shipinfo = sampleShips[0].state
+                )
+                infoItem(icon = R.drawable.box, infotype = "Type", shipinfo = sampleShips[0].state)
+                infoItem(
+                    icon = R.drawable.clock_history,
+                    infotype = "ETA",
+                    shipinfo = sampleShips[0].state
+                )
+                infoItem(
+                    icon = R.drawable.globe_americas,
+                    infotype = "Origin",
+                    shipinfo = sampleShips[0].state
+                )
 
             }
 
@@ -192,19 +209,22 @@ fun MyShips() {
 
 @Composable
 fun PortStatus() {
-    val states = listOf("Incoming", "In Quai","In Rade")
+    val states = listOf("Incoming", "In Quai", "In Rade")
 
-
+    val scrollState = rememberScrollState()
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState),
+
+        ) {
 
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(0.dp)
-            ,
+                .padding(0.dp),
             elevation = CardDefaults.cardElevation(10.dp),
             colors = CardDefaults.cardColors(Color.White)
 
@@ -223,11 +243,10 @@ fun PortStatus() {
 fun portFilter(states: List<String>) {
 
     val sampleShips = listOf(
-        Ship(1, "Cargo Ship 1", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
-        Ship(2, "Cargo Ship 2", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
-        Ship(3, "Cargo Ship 1", "Active", 2, 50,"Incoming","25/04/2024","MARSEILLE"),
-        Ship(3, "Cargo Ship 1", "Active", 2, 50,"In Rade","25/04/2024","MARSEILLE"),
-
+        Ship(1, "Ship1", "Active", 2, 50, "Incoming", "25/04/2024", "MARSEILLE"),
+        Ship(2, "Ship2", "Active", 2, 50, "Incoming", "25/04/2024", "MARSEILLE"),
+        Ship(3, "Ship3", "Active", 2, 50, "Incoming", "25/04/2024", "MARSEILLE"),
+        Ship(3, "Ship4", "Active", 2, 50, "In Rade", "25/04/2024", "MARSEILLE"),
         )
 
     var expanded by remember { mutableStateOf(false) }
@@ -293,7 +312,7 @@ fun portFilter(states: List<String>) {
             }
         }
     }
-    portItem(sampleShips,state_name)
+    portItem(sampleShips, state_name)
 
 }
 

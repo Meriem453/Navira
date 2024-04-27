@@ -33,7 +33,7 @@ import com.example.hackathonapp.model.Ship
 
 
 @Composable
-fun MapScreen(navController: NavHostController) {
+fun MapScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -145,5 +145,9 @@ val sampleQuays = listOf(
 
     )
 
+@Preview
+@Composable
+private fun MapScreenprev() {
 
+}
 
