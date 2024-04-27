@@ -105,6 +105,9 @@ dependencies {
     implementation ("com.google.android.exoplayer:exoplayer-core:2.17.1")
     implementation ("com.google.android.exoplayer:exoplayer-ui:2.17.1")
 
+    //pager
+    implementation ("com.google.accompanist:accompanist-pager:0.12.0") //This dependency is used for Horizontal Pager.
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.12.0")
 
 
 }

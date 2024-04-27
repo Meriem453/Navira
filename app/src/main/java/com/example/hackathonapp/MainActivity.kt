@@ -37,6 +37,7 @@ import com.example.hackathonapp.ViewModels.LoginVM
 import com.example.hackathonapp.navigations.Home
 import com.example.hackathonapp.navigations.Map
 import com.example.hackathonapp.navigations.Navigation
+import com.example.hackathonapp.screens.HomeScreen
 import com.example.hackathonapp.screens.gettingstartedScreen
 import com.example.hackathonapp.ui.theme.HackathonAppTheme
 import com.google.android.exoplayer2.ExoPlayer
@@ -58,7 +59,6 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 MainScreen(this)
                // gettingstartedScreen(getVideoUri())
-
             }
         }
     }

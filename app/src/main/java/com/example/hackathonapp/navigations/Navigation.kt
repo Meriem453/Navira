@@ -20,7 +20,7 @@ fun Navigation(navController: NavHostController){
         }
 
         composable(route = Map.route){
-            MapScreen(navController)
+            MapScreen()
         }
     }
 }
