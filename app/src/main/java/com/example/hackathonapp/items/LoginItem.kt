@@ -70,7 +70,9 @@ fun SimpleTextField(
             unfocusedBorderColor = Color.Gray,
             focusedLabelColor = Color.Gray,
             containerColor = Color.Transparent,
-            cursorColor = Color.Black
+            cursorColor = Color.White,
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White
         ),
         keyboardOptions = keyboardOptions,
         isError = !errorStatus

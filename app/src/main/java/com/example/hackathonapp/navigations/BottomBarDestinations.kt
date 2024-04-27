@@ -14,6 +14,12 @@ object Map: BottomBarDestinations {
     override val title = "Map"
 }
 
+object Emergency: BottomBarDestinations {
+    override val route = "Emergency"
+    override val icon = R.drawable.exclamation_triangle
+    override val title = "Emergency"
+}
+
 object Home: BottomBarDestinations {
     override val route = "Home"
     override val icon = R.drawable.home
