@@ -1,23 +1,34 @@
 package com.example.hackathonapp.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -28,113 +39,114 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.hackathonapp.R
 import com.example.hackathonapp.ViewModels.LoginVM
+import com.example.hackathonapp.items.MyTextField
+import com.example.hackathonapp.items.SimpleTextField
+import com.example.hackathonapp.items.customButton
+import com.example.hackathonapp.navigations.Home
 
-/*
+
 @Composable
-fun LoginScreen(navController: NavController, SignupViewModel: LoginVM = hiltViewModel<LoginVM>()) {
+fun LoginScreen(navController: NavController) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
+
+
+        Image(
+            painter = painterResource(id = R.drawable.loginbg),
+            contentDescription = "background",
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier
+                .matchParentSize()
+
+        )
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .weight(9.5f)
-                .background(Color.White)
                 .padding(28.dp)
 
         ) {
-            Icon(
-                modifier = Modifier
-                    .padding(10.dp)
-                    .align(Alignment.CenterHorizontally)
-                    .size(60.dp),
-                tint = Color.Black,
-                painter = IconResource.fromDrawableResource(R.drawable.threads_logo)
-                    .asPainterResource(),
-                contentDescription = null
+            Spacer(
+                modifier = Modifier.fillMaxHeight (.3f),
             )
+
             Text(
-                text = stringResource(id = R.string.Login),
+                text = "Log into ",
                 style = MaterialTheme.typography.titleLarge,
-                fontSize = 32.sp,
+                color = Color.White,
+                fontSize = 42.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(.2f),
-                textAlign = TextAlign.Center
+                    .padding(horizontal = 10.dp)
+                ,
+                textAlign = TextAlign.Start
             )
-
-            SimpleTextField(
-                labelValue = stringResource(id = R.string.usernamepass),
+            Text(
+                text = "Your account",
+                style = MaterialTheme.typography.titleLarge,
+                color = Color.White,
+                fontSize = 42.sp,
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .align(Alignment.CenterHorizontally),
-                KeyboardOptions.Default,
-                onTextChanged = {
-                    signupViewModel.onEvent(SignupUIEvent.EmailChanged(it))
-                },
-                signupViewModel.registrationUIState.value.emailError
-
+                    .fillMaxWidth()
+                    .padding(10.dp)
+                ,
+                textAlign = TextAlign.Start
             )
 
+            Spacer(
+                modifier = Modifier.fillMaxHeight (.1f),
+            )
+
+            var text by rememberSaveable { mutableStateOf("") }
+
             SimpleTextField(
-                labelValue = stringResource(id = R.string.password),
+                labelValue = "Enter Ship Name",
                 modifier = Modifier
                     .padding(vertical = 10.dp)
                     .fillMaxWidth(0.9f)
                     .align(Alignment.CenterHorizontally),
                 KeyboardOptions(keyboardType = KeyboardType.Password),
                 onTextChanged = {
-                    signupViewModel.onEvent(SignupUIEvent.PasswordChanged(it))
                 },
-                signupViewModel.registrationUIState.value.passwordError
+                true
+            )
 
+
+            SimpleTextField(
+                labelValue = "Enter Ship id",
+                modifier = Modifier
+                    .padding(vertical = 10.dp)
+                    .fillMaxWidth(0.9f)
+                    .align(Alignment.CenterHorizontally),
+                KeyboardOptions(keyboardType = KeyboardType.Password),
+                onTextChanged = {
+                },
+                true
             )
 
             customButton(
-                text =
-                stringResource(
-                    id = R.string.Login
-                ),
+                text = "Login",
                 modifier = Modifier
                     .padding(vertical = 20.dp)
                     .fillMaxWidth(0.9f)
                     .align(Alignment.CenterHorizontally),
                 onButtonClicked = {
-                    signupViewModel.onEvent(SignupUIEvent.RegisterButtonClicked)
-                    navController.navigate(NavBarScreen.Home.route)
+                     navController.navigate(Home.route)
                 },
-                isEnabled = signupViewModel.allLoginValidationsPassed.value
+                isEnabled = true
 
 
             )
 
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(.5f)
-                .background(Color.White)
-        ) {
-            divider()
-            Text(
-                text = stringResource(id = R.string.donthave),
-                style = LocalTextStyle.current.copy(
-                    color = Color.Gray,
-                    fontSize = MaterialTheme.typography.bodyMedium.fontSize
-                ),
-                modifier = Modifier
-                    .clickable { navController.navigate(NavBarScreen.SignupScreen.route) }
-                    .weight(1f)
-                    .fillMaxSize(),
-                textAlign = TextAlign.Center
-            )
-        }
 
     }
 
@@ -147,4 +159,4 @@ fun LoginScreenPreview() {
 
 
 }
-*/
+

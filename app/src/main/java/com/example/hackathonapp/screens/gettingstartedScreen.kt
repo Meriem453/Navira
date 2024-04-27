@@ -72,6 +72,7 @@ import com.example.hackathonapp.items.OnBoardingButton
 import com.example.hackathonapp.items.PagerIndicator
 import com.example.hackathonapp.model.OnBoardingPage
 import com.example.hackathonapp.model.pages
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.android.exoplayer2.ExoPlayer
@@ -85,14 +86,13 @@ import kotlinx.coroutines.launch
 @SuppressLint("RememberReturnType")
 @OptIn( ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
 @Composable
-fun gettingstartedScreen() {
+fun gettingstartedScreen(videoUri: Uri) {
 
     val context = LocalContext.current
- //   val items = ArrayList<OnBoardingData>()
 
-   // val exoPlayer = remember { context.buildExoPlayer(videoUri!!) }
+    val exoPlayer = remember { context.buildExoPlayer(videoUri!!) }
 
-  /*  DisposableEffect(
+    DisposableEffect(
         AndroidView(
             factory = { it.buildPlayerView(exoPlayer) },
             modifier = Modifier.fillMaxSize()
@@ -104,82 +104,83 @@ fun gettingstartedScreen() {
     }
 
     ProvideWindowInsets {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xff2980B9).copy(alpha = .4f))
+            .padding(10.dp)
 
-    }*/
-
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(Color(0xff2980B9).copy(alpha = .4f))
-
-    ) {
+        ) {
 
 
-        val pagerState = rememberPagerState(initialPage = 0) {
-            pages.size
-        }
-        val buttonsState = remember {
-            derivedStateOf {
-                when (pagerState.currentPage) {
-                    0 -> listOf("", "Next")
-                    1 -> listOf("Back", "Next")
-                    2 -> listOf("Back", "Get Started")
-                    else -> listOf("", "")
+            val pagerState = rememberPagerState(initialPage = 0) {
+                pages.size
+            }
+            val buttonsState = remember {
+                derivedStateOf {
+                    when (pagerState.currentPage) {
+                        0 -> listOf("", "Next")
+                        1 -> listOf("Back", "Next")
+                        2 -> listOf("Back", "Get Started")
+                        else -> listOf("", "")
+                    }
                 }
             }
-        }
-        HorizontalPager(state = pagerState) { index ->
-            OnBoardingPage(page= pages[index])
-        }
+            HorizontalPager(state = pagerState) { index ->
+                OnBoardingPage(page= pages[index])
+            }
 
-        Spacer(modifier = Modifier.weight(1f))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 30.dp)
-                .navigationBarsPadding(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            PagerIndicator(
-                modifier = Modifier.width(52.dp),
-                pagesSize = pages.size,
-                selectedPage = pagerState.currentPage
-            )
+            Spacer(modifier = Modifier.weight(1f))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 30.dp)
+                    .navigationBarsPadding(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                PagerIndicator(
+                    modifier = Modifier.width(52.dp),
+                    pagesSize = pages.size,
+                    selectedPage = pagerState.currentPage
+                )
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                val scope = rememberCoroutineScope()
-                //Hide the button when the first element of the list is empty
-                if (buttonsState.value[0].isNotEmpty()) {
-                    NewsTextButton(
-                        text = buttonsState.value[0],
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    val scope = rememberCoroutineScope()
+                    //Hide the button when the first element of the list is empty
+                    if (buttonsState.value[0].isNotEmpty()) {
+                        NewsTextButton(
+                            text = buttonsState.value[0],
+                            onClick = {
+                                scope.launch {
+                                    pagerState.animateScrollToPage(
+                                        page = pagerState.currentPage - 1
+                                    )
+                                }
+
+                            }
+                        )
+                    }
+                    OnBoardingButton(
+                        text = buttonsState.value[1],
                         onClick = {
                             scope.launch {
-                                pagerState.animateScrollToPage(
-                                    page = pagerState.currentPage - 1
-                                )
+                                if (pagerState.currentPage == 3){
+                                    //Navigate to the main screen and save a value in datastore preferences
+                                }else{
+                                    pagerState.animateScrollToPage(
+                                        page = pagerState.currentPage + 1
+                                    )
+                                }
                             }
-
                         }
                     )
                 }
-                OnBoardingButton(
-                    text = buttonsState.value[1],
-                    onClick = {
-                        scope.launch {
-                            if (pagerState.currentPage == 3){
-                                //Navigate to the main screen and save a value in datastore preferences
-                            }else{
-                                pagerState.animateScrollToPage(
-                                    page = pagerState.currentPage + 1
-                                )
-                            }
-                        }
-                    }
-                )
             }
+            Spacer(modifier = Modifier.weight(0.5f))
         }
-        Spacer(modifier = Modifier.weight(0.5f))
     }
+
+
 
 
 
@@ -203,11 +204,7 @@ private fun Context.buildPlayerView(exoPlayer: ExoPlayer) =
     }
 
 
-@Preview
-@Composable
-private fun gettingstartedprev() {
-    gettingstartedScreen()
-}
+
 
 
 

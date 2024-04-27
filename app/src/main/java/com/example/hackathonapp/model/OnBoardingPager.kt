@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -21,9 +22,7 @@ import androidx.compose.ui.unit.sp
 fun OnBoardingPage(
     modifier: Modifier = Modifier
         .fillMaxWidth()
-        .fillMaxHeight(.8f)
-    ,
-
+        .fillMaxHeight(.9f),
     page: Page,
 ) {
     Column(
@@ -34,7 +33,8 @@ fun OnBoardingPage(
         Text(
             text = page.title,
             fontSize = 36.sp,
-            color = Color.White
+            color = Color.White,
+            fontWeight = FontWeight.Bold
         )
 
         Text(
@@ -42,7 +42,9 @@ fun OnBoardingPage(
             fontSize = 18.sp,
             color = Color.White,
             modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold
+
         )
 
     }

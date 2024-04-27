@@ -56,8 +56,8 @@ class MainActivity : ComponentActivity() {
             HackathonAppTheme {
                 val c = LocalContext.current
                 // A surface container using the 'background' color from the theme
-                MainScreen(this)
-               // gettingstartedScreen(getVideoUri())
+               // MainScreen(this)
+                gettingstartedScreen(getVideoUri())
 
             }
         }
