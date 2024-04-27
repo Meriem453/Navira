@@ -12,6 +12,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.hackathonapp.R
+import com.example.hackathonapp.ViewModels.MapVM
 import com.example.hackathonapp.items.InteractivePortMap
 import com.example.hackathonapp.model.Quay
 import com.example.hackathonapp.model.Ship
@@ -91,8 +98,23 @@ fun MapScreen() {
                 )
 
                 Box(modifier = Modifier){
+                    val vm = hiltViewModel<MapVM>()
+                    var list by remember {
+                        mutableStateOf(sampleShips)
+                    }
+                    var quay by remember {
+                        mutableStateOf(sampleQuays)
+                    }
+
                     Image(painter = painterResource(id = R.drawable.map_horizontal_devider), contentDescription = null,Modifier.fillMaxSize())
-                    InteractivePortMap(ships = sampleShips, quays = sampleQuays)
+                    InteractivePortMap(ships = list, quays = quay)
+                    vm.getALlShips {
+                        list=it
+                    }
+                    vm.getALlQuay {
+                        quay = it
+                    }
+
                 }
 
             }
@@ -120,10 +142,8 @@ val sampleShips = listOf(
 
 val sampleQuays = listOf(
     Quay("Q1", true, null),
-    Quay("Q2", false, "2"), // Quay occupied by ship with ID 2
+    Quay("Q2", true, "2"), // Quay occupied by ship with ID 2
     Quay("Q3", true, null),
-    Quay("Q4", true, null),
-    Quay("Q3", false, null),
     Quay("Q4", true, null),
     Quay("Q3", true, null),
     Quay("Q4", true, null),
@@ -132,7 +152,9 @@ val sampleQuays = listOf(
     Quay("Q3", true, null),
     Quay("Q4", true, null),
     Quay("Q3", true, null),
-    Quay("Q4", false, null),
+    Quay("Q4", true, null),
+    Quay("Q3", true, null),
+    Quay("Q4", true, null),
 
     )
 

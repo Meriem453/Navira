@@ -55,6 +55,7 @@ fun LoginScreen(navController: NavController) {
 
     val scrollState = rememberScrollState()
 
+val vm = hiltViewModel<LoginVM>()
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
