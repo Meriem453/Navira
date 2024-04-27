@@ -49,7 +49,7 @@ import com.example.hackathonapp.navigations.Home
 
 @Composable
 fun LoginScreen(navController: NavController) {
-
+val vm = hiltViewModel<LoginVM>()
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

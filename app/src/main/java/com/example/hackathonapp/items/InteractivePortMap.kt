@@ -25,13 +25,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.hackathonapp.R
+import com.example.hackathonapp.ViewModels.MapVM
 import com.example.hackathonapp.model.Quay
 import com.example.hackathonapp.model.Ship
 
 @Composable
 fun InteractivePortMap(ships: List<Ship>, quays: List<Quay>) {
-
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
